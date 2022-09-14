@@ -116,6 +116,13 @@ async function run() {
                 res.send({ success: true, result });
             }
         });
+        //delete product
+        app.delete('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(query);
+            res.send(result);
+        });
 
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
@@ -123,7 +130,7 @@ async function run() {
             const result = await productCollection.findOne(query);
             res.send(result);
         });
-
+        //Add to cart
         app.post('/cart', async (req, res) => {
             const cart = req.body;
             const query = { name: cart.name, email: cart.email, pQuantity: cart.pQuantity, cartID: cart.cartID };
@@ -136,6 +143,14 @@ async function run() {
                 res.send({ success: true, result });
             }
         });
+        //Delete cart
+        app.delete('/cart/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await cartCollection.deleteOne(query);
+            res.send(result);
+        });
+        
 
         app.post('/order', async (req, res) => {
             const order = req.body;
